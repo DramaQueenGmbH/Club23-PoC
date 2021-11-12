@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club23</title>
+    <script type="text/javascript">
+         function fieldChanged(name, value) {
+             const element = document.getElementById(name);
+             if (element) {
+                element.innerHTML = value;
+             }
+         }
+    </script>
+</head>
+<body>
+    <noscript></noscript>
+    <h1>SWT.Browser contents</h1>
+    <h2>Element 1</h2>
+    <p>This is some random text. Please give your document a <a href="dq://focus?panel=document&field=Title">title</a>.</p>
+    <p>Once you have done that, you can give your document a <a href="dq://focus?panel=document&field=Logline">logline</a>.</p>
+
+    <h2>Element 2</h2>
+    <p>Let's create a <a href="dq://focus?panel=document&field=Summary">summary</a> for "<span id="Title" style="font-style: italic;">&lt;title&gt;</span>".</p>
+    <p>When you're done, visit <a href="https://www.wikipedia.org">Wikipedia</a>.</p>
+</body>
+</html>
