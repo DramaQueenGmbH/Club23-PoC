@@ -1,0 +1,16 @@
+{
+  "resources": [
+    {"pattern": "\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"},
+    {"pattern": ".*\\.png$"},
+    {"pattern": ".*\\.xml$"},
+    {"pattern": ".*\\.html$"},
+    {"pattern": ".*\\.json$"},
+    {"pattern": ".*\\.messages$"},
+    {"pattern": "\\Qlibswt-cocoa-.*.jnilib\\E"},
+    {"pattern": "\\Qlibswt-pi-cocoa-.*.jnilib\\E"},
+    {"pattern": "\\Qlibtextengine-cocoa-0.0.0.jnilib\\E"}
+  ],
+  "bundles": [
+    {"name": "org.eclipse.swt.internal.SWTMessages"}
+  ]
+}
