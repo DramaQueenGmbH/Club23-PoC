@@ -35,7 +35,7 @@ public class App {
         Composite leftPanel = new DocumentPanel(shell, document);
         fillGrid(leftPanel).widthHint = 100;
         Composite rightPanel = new Club23Panel(shell, document);
-        fillGrid(rightPanel).widthHint = 200;;
+        fillGrid(rightPanel).widthHint = 200;
 
         GridLayout layout = new GridLayout(2, false);
         layout.marginWidth = 0;
