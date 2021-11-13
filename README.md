@@ -27,3 +27,29 @@ The values of [`Properties`](src/main/java/com/dramaqueen/club23/model/Property.
 This is achieved by registering a [`DocumentListener`](src/main/java/com/dramaqueen/club23/model/DocumentListener.java) and then executing a Javascript function defined in `index.html`.
 This function tries to find a DOM element with an id matching the `Property` name.
 The `.innerHTML` of the DOM element is then set to the value of the `Property`.
+
+## Native image
+
+This project supports building with [GraalVM](https://www.graalvm.org) [Native Image](https://www.graalvm.org/native-image/).
+It uses the [Maven Native Image plugin](https://graalvm.github.io/native-build-tools/0.9.7.1/maven-plugin.html) in the POM profile `native`.
+Follow the instructions for setting up GraalVM and Native Image on the site linked above.
+
+Then you can build via:
+
+```shell
+mvn -Pnative -DskipTests package
+```
+
+The native executable is found at `target/club23-poc`.
+
+### Native image compiler configuration
+
+The native image compilation does not process the Java sources directly.
+Instead, a regular JAR with JVM bytecode is produced first.
+This JAR also contains resources.
+The compiler options are passed via a [special set of resources](src/main/resources/META-INF/native-image/com.dramaqueen/club32-poc).
+They control how the `.class` files are processed.
+Normally, a reachability analysis would exclude any dead code.
+But for many SWT classes, this would result in excluding important code.
+This is where the reflection and JNI configuration comes into play and prevents that.
+Also, many resources such as the native libraries contained in the SWT JAR are preserved and end up on the final native image.
