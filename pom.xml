@@ -11,7 +11,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <swt.version>3.116.100</swt.version>
+    <swt.version>3.117.0</swt.version>
     <native.maven.plugin.version>0.9.7</native.maven.plugin.version>
     <junit.jupiter.version>5.8.1</junit.jupiter.version>
     <junit.platform.native.version>0.9.8-SNAPSHOT</junit.platform.native.version>

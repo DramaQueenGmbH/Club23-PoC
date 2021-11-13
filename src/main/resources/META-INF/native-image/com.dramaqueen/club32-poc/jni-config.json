@@ -7,6 +7,11 @@
     ]
   },
   {
+    "name":"java.lang.Throwable",
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
+  },
+  {
     "name":"java.util.ArrayList",
     "methods":[
       {"name":"<init>","parameterTypes":[] },

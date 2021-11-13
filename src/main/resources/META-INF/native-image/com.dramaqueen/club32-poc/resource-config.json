@@ -6,9 +6,7 @@
     {"pattern": ".*\\.html$"},
     {"pattern": ".*\\.json$"},
     {"pattern": ".*\\.messages$"},
-    {"pattern": "\\Qlibswt-cocoa-.*.jnilib\\E"},
-    {"pattern": "\\Qlibswt-pi-cocoa-.*.jnilib\\E"},
-    {"pattern": "\\Qlibtextengine-cocoa-0.0.0.jnilib\\E"}
+    {"pattern": ".*\\.jnilib$"}
   ],
   "bundles": [
     {"name": "org.eclipse.swt.internal.SWTMessages"}
