@@ -48,7 +48,8 @@ The native image compilation does not process the Java sources directly.
 Instead, a regular JAR with JVM bytecode is produced first.
 This JAR also contains resources.
 The compiler options are passed via a [special set of resources](src/main/resources/META-INF/native-image/com.dramaqueen/club32-poc).
-They control how the `.class` files are processed.
+They control how the `.class` files and resources are processed.
+Comprehensive information is available in this [Medium article](https://medium.com/graalvm/simplifying-native-image-generation-with-maven-plugin-and-embeddable-configuration-d5b283b92f57).
 Normally, a reachability analysis would exclude any dead code.
 But for many SWT classes, this would result in excluding important code.
 This is where the reflection and JNI configuration comes into play and prevents that.
