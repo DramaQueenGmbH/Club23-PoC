@@ -53,3 +53,6 @@ Normally, a reachability analysis would exclude any dead code.
 But for many SWT classes, this would result in excluding important code.
 This is where the reflection and JNI configuration comes into play and prevents that.
 Also, many resources such as the native libraries contained in the SWT JAR are preserved and end up on the final native image.
+
+:warning: The current native-image configuration only supports native macOS images.
+The `pom.xml` currently specify the macOS version of SWT only. 
