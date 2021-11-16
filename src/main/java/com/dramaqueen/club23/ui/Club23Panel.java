@@ -5,19 +5,15 @@ import com.dramaqueen.club23.model.DocumentListener;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationAdapter;
 import org.eclipse.swt.browser.LocationEvent;
-import org.eclipse.swt.browser.LocationListener;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
@@ -61,7 +57,17 @@ public class Club23Panel extends Composite {
             }
         });
 
-        loadBrowserContents();
+        fBrowser.setUrl("https://ba5k8vx.myraidbox.de/schreibtisch");
+
+        fBrowser.addProgressListener( new ProgressListener() {
+            public void changed(ProgressEvent event) {
+                // @TODO: implement loading progress bar
+            }
+
+            public void completed(ProgressEvent event) {
+                fBrowser.execute("initDq()");
+            }
+        });
 
         setLayout(new FillLayout());
     }
@@ -78,26 +84,10 @@ public class Club23Panel extends Composite {
         return paramMap;
     }
 
-    private void loadBrowserContents() {
-        InputStream resource = getClass().getResourceAsStream("index.html");
-        try {
-            if (resource != null) {
-                String html = new String(resource.readAllBytes());
-                fBrowser.setText(html);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                resource.close();
-            } catch (Exception ignored) {
-            }
-        }
-    }
-
     private class DOMPropertyUpdater implements DocumentListener {
         @Override
         public void propertyChanged(String name, String value) {
-            fBrowser.execute("fieldChanged(`" + name + "`,`" + value + "`);");
+            fBrowser.execute("onPropChanged(`" + name + "`,`" + value + "`);");
         }
     }
 }
