@@ -1,6 +1,6 @@
 # Club23 PoC 
 
-Prototype `SWT.Browser` and Club23 integration
+Prototype `SWT Browser` and Club23 integration
 
 ## Purpose
 
@@ -22,6 +22,12 @@ Use the `Add VM Options` feature and add the following parameter:
 `-XstartOnFirstThread`
 
 <img width="507" alt="image" src="https://user-images.githubusercontent.com/67784/142598400-56410334-8e75-401a-ac57-31f2705d19c8.png">
+
+By default, the app loads a webpage from its own resources into the `SWT Browser`.
+It's also possible to load a custom URL.
+The easiest way is to create another run configuration and pass the URL via program arguments:
+
+<img width="736" alt="image" src="https://user-images.githubusercontent.com/67784/142638187-6f75704e-0542-4701-8275-9de793f31130.png">
 
 ## Repo layout
 
