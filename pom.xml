@@ -43,6 +43,11 @@
       <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
       <version>${swt.version}</version>
     </dependency-->
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.jface</artifactId>
+      <version>3.23.0</version>
+    </dependency>
   </dependencies>
 
   <profiles>
