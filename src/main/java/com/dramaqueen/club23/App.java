@@ -22,9 +22,9 @@ public class App {
 
     private static void storeArgsInDocument(Document document, String[] args) {
         for (String arg : args) {
-            if (arg.startsWith("url=")) {
-                String url = arg.substring("url=".length());
-                document.setValue("url", url);
+            String[] keyValue = arg.split("=");
+            if (keyValue.length == 2) {
+                document.setValue(keyValue[0], keyValue[1]);
             }
         }
     }
