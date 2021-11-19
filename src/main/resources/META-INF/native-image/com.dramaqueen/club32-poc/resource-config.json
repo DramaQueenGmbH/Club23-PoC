@@ -9,6 +9,7 @@
     {"pattern": ".*\\.jnilib$"}
   ],
   "bundles": [
-    {"name": "org.eclipse.swt.internal.SWTMessages"}
+    {"name": "org.eclipse.swt.internal.SWTMessages"},
+    {"name": "org.eclipse.jface.messages"}
   ]
 }
