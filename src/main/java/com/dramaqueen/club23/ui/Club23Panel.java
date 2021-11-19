@@ -3,7 +3,6 @@ package com.dramaqueen.club23.ui;
 import com.dramaqueen.club23.model.Document;
 import com.dramaqueen.club23.model.DocumentListener;
 import com.dramaqueen.club23.ui.jface.IconAction;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.browser.Browser;
@@ -17,8 +16,6 @@ import org.eclipse.swt.SWT;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
