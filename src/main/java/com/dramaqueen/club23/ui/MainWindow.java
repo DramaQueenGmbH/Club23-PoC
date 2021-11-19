@@ -21,6 +21,7 @@ public class MainWindow {
     public Shell open() {
         Shell shell = createShell();
         createInterface(shell, fDocument);
+        shell.setSize(1000, 600);
         shell.open();
         return shell;
     }
@@ -53,6 +54,9 @@ public class MainWindow {
         ToolBar toolBar = shell.getToolBar();
         if (toolBar == null) {
             toolBar = new ToolBar(shell, SWT.FLAT);
+            GridData layoutData = fillGrid(toolBar);
+            layoutData.horizontalSpan = 2;
+            layoutData.grabExcessVerticalSpace = false;
         }
         return new ToolBarManager(toolBar);
     }

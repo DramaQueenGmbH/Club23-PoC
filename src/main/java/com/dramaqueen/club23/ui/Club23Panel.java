@@ -31,7 +31,11 @@ public class Club23Panel extends Composite {
         fDocument.addListener(domUpdater);
         addDisposeListener(disposeEvent -> fDocument.removeListener(domUpdater));
 
-        fBrowser = new Browser(this, SWT.NULL);
+        int browserFlags = SWT.NULL;
+        if ("win32".equals(SWT.getPlatform())) {
+            browserFlags = SWT.EDGE;
+        }
+        fBrowser = new Browser(this, browserFlags);
         fBrowser.addLocationListener(new LocationListener() {
             @Override
             public void changing(LocationEvent locationEvent) {
