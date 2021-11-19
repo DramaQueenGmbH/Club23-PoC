@@ -1,12 +1,14 @@
 package com.dramaqueen.club23.ui;
 
 import com.dramaqueen.club23.model.Document;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import com.dramaqueen.club23.model.DocumentListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -23,10 +25,22 @@ public class DocumentPanel extends Composite implements Panel {
         fDocument = document;
         fFields = new HashMap<>();
 
+        addTitle();
+
         String[] fields = {"Title", "Logline", "Summary"};
         for (String f : fields) {
-            setupTextField(f);
+            addTextField(f);
         }
+
+        fDocument.addListener(new DocumentListener() {
+            @Override
+            public void propertyChanged(String name, String value) {
+                Text field = fFields.get(name);
+                if (field != null && !value.equals(field.getText())) {
+                    field.setText(value);
+                }
+            }
+        });
 
         FocusManager.registerPanel("document", this);
 
@@ -46,18 +60,31 @@ public class DocumentPanel extends Composite implements Panel {
         }
     }
 
-    private void setupTextField(final String field) {
+    private void addTextField(final String field) {
         Label label = new Label(this, SWT.NULL);
         label.setText(field);
 
         final Text text = new Text(this, SWT.SINGLE | SWT.BORDER);
-        text.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent modifyEvent) {
-                fDocument.setValue(field, text.getText());
-            }
-        });
+        text.addModifyListener(modifyEvent -> fDocument.setValue(field, text.getText()));
         text.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
         fFields.put(field, text);
+    }
+
+    private void addTitle() {
+        Label label = new Label(this, SWT.NULL);
+        label.setText("Document Mock Native UI");
+        setTitleFont(label);
+
+        GridData layoutData = new GridData(GridData.CENTER, GridData.CENTER, true, false);
+        layoutData.horizontalSpan = 2;
+        label.setLayoutData(layoutData);
+    }
+
+    private static void setTitleFont(Control control) {
+        FontData fontData = control.getFont().getFontData()[0];
+        fontData.setHeight(24);
+        Font titleFont = new Font(control.getDisplay(), fontData);
+        control.setFont(titleFont);
+        control.addDisposeListener(disposeEvent -> titleFont.dispose());
     }
 }

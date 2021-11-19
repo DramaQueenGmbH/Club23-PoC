@@ -20,8 +20,10 @@ public class Document {
             p = new Property();
             fProperties.put(name, p);
         }
-        p.setValue(value);
-        notifyValueChanged(name, p);
+        if (!value.equals(p.getValue())) {
+            p.setValue(value);
+            notifyValueChanged(name, p);
+        }
     }
 
     public String getValue(String name) {

@@ -10,11 +10,18 @@ Solve technical challenges when communicating between a webpage embedded in an `
 
 Clone the project and open it in IntelliJ.
 Navigate to the [App class](src/main/java/com/dramaqueen/club23/App.java).
-Click the green Play button besides the `main()` method. On macOS, this should likely fail on the first try.
+Click the green Play button besides the `main()` method.
+
+:warning: On macOS, this should likely fail on the first try.
 But it created a Run-Configuration which you can now edit.
+
+<img width="276" alt="image" src="https://user-images.githubusercontent.com/67784/142598181-40a06db3-ddbe-407b-b912-1d1a86808404.png">
+
 Use the `Add VM Options` feature and add the following parameter:
 
 `-XstartOnFirstThread`
+
+<img width="507" alt="image" src="https://user-images.githubusercontent.com/67784/142598400-56410334-8e75-401a-ac57-31f2705d19c8.png">
 
 ## Repo layout
 
