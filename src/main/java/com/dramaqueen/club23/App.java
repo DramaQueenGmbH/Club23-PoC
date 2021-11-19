@@ -6,15 +6,26 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class App {
-    public static void main( String[] args) {
+    public static void main(String[] args) {
         Display display = Display.getDefault();
 
         Document document = new Document();
+        storeArgsInDocument(document, args);
+
         MainWindow window = new MainWindow(document);
         Shell shell = window.open();
 
         while (!shell.isDisposed()) {
             display.readAndDispatch();
+        }
+    }
+
+    private static void storeArgsInDocument(Document document, String[] args) {
+        for (String arg : args) {
+            if (arg.startsWith("url=")) {
+                String url = arg.substring("url=".length());
+                document.setValue("url", url);
+            }
         }
     }
 }

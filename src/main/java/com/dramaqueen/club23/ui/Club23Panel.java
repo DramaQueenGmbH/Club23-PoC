@@ -44,7 +44,7 @@ public class Club23Panel extends Composite {
             @Override
             public void changing(LocationEvent locationEvent) {
                 if ("about:blank".equals(locationEvent.location)) {
-                    loadBrowserContents();
+                    loadBrowserContentsFromResources();
                 } else if (locationEvent.location.startsWith("dq://focus")) {
                     try {
                         String query = locationEvent.location.split("\\?")[1];
@@ -93,8 +93,13 @@ public class Club23Panel extends Composite {
 
         fEventCallback = new EventCallback(fBrowser, fDocument);
 
-        // fBrowser.setUrl("https://ba5k8vx.myraidbox.de/schreibtisch");
-        loadBrowserContents();
+        String url = document.getValue("url");
+        if (url.length() > 0) {
+            fBrowser.setUrl(url);
+        } else {
+            loadBrowserContentsFromResources();
+        }
+
         updateActions();
 
         setLayout(new FillLayout());
@@ -125,7 +130,7 @@ public class Club23Panel extends Composite {
         return paramMap;
     }
 
-    private void loadBrowserContents() {
+    private void loadBrowserContentsFromResources() {
         InputStream resource = getClass().getResourceAsStream("index.html");
         try {
             if (resource != null) {
