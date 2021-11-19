@@ -68,8 +68,6 @@ public class Club23Panel extends Composite {
             }
         });
 
-        fBrowser.setUrl("https://ba5k8vx.myraidbox.de/schreibtisch");
-
         fBrowser.addProgressListener( new ProgressListener() {
             public void changed(ProgressEvent event) {
                 // @TODO: implement loading progress bar
@@ -96,6 +94,7 @@ public class Club23Panel extends Composite {
 
         fEventCallback = new EventCallback(fBrowser, fDocument);
 
+        // fBrowser.setUrl("https://ba5k8vx.myraidbox.de/schreibtisch");
         loadBrowserContents();
         updateActions();
 
@@ -125,6 +124,22 @@ public class Club23Panel extends Composite {
                     URLDecoder.decode(pair.substring(idx + 1), StandardCharsets.UTF_8));
         }
         return paramMap;
+    }
+
+    private void loadBrowserContents() {
+        InputStream resource = getClass().getResourceAsStream("index.html");
+        try {
+            if (resource != null) {
+                String html = new String(resource.readAllBytes());
+                fBrowser.setText(html);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                resource.close();
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     private class DOMPropertyUpdater implements DocumentListener {
