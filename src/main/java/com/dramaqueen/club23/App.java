@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         Display display = Display.getDefault();
 
-        Document document = new Document();
+        Document document = initDocument();
         storeArgsInDocument(document, args);
 
         MainWindow window = new MainWindow(document);
@@ -18,6 +18,13 @@ public class App {
         while (!shell.isDisposed()) {
             display.readAndDispatch();
         }
+    }
+
+    private static Document initDocument() {
+        Document document = new Document();
+        document.setValue("dqProperty1", "42");
+        document.setValue("dqProperty2", "Awesome");
+        return document;
     }
 
     private static void storeArgsInDocument(Document document, String[] args) {

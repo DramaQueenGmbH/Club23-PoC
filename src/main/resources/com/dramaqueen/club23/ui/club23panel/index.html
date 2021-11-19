@@ -26,10 +26,10 @@
     <p id="debug">fooo</p>
 </body>
 <script type="text/javascript">
-    function initDq() {
+    function initDq( dqDocument ) {
         document.getElementById( 'debug' ).style.border = '3px solid blue';
         window.sessionStorage.setItem( 'agent', 'dq' );
-        // window.sessionStorage.setItem( 'document', document );
+        window.sessionStorage.setItem( 'document', dqDocument );
         document.getElementById( 'debug' ).innerHTML = JSON.stringify(window.sessionStorage);
     }
 

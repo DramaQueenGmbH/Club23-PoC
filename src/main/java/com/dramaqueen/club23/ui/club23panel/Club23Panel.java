@@ -66,7 +66,9 @@ public class Club23Panel extends Composite {
             }
 
             public void completed(ProgressEvent event) {
-                fBrowser.execute("initDq()");
+                String documentAsJSObject = JavascriptUtils.toJavascriptObject(fDocument);
+                String script = "initDq(" + documentAsJSObject + ");";
+                fBrowser.execute(script);
             }
         });
 
