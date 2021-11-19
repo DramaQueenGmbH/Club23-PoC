@@ -9,6 +9,8 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
@@ -65,6 +67,16 @@ public class Club23Panel extends Composite {
             }
         });
 
+        fBrowser.addProgressListener( new ProgressListener() {
+            public void changed(ProgressEvent event) {
+                // @TODO: implement loading progress bar
+            }
+
+            public void completed(ProgressEvent event) {
+                fBrowser.execute("initDq()");
+            }
+        });
+
         fBackAction = new IconAction("Back", "go previous") {
             @Override
             public void run() {
@@ -81,6 +93,7 @@ public class Club23Panel extends Composite {
 
         fEventCallback = new EventCallback(fBrowser, fDocument);
 
+        // fBrowser.setUrl("https://ba5k8vx.myraidbox.de/schreibtisch");
         loadBrowserContents();
         updateActions();
 
@@ -131,7 +144,7 @@ public class Club23Panel extends Composite {
     private class DOMPropertyUpdater implements DocumentListener {
         @Override
         public void propertyChanged(String name, String value) {
-            fBrowser.execute("fieldChanged(`" + name + "`,`" + value + "`);");
+            fBrowser.execute("onPropChanged(`" + name + "`,`" + value + "`);");
         }
     }
 
