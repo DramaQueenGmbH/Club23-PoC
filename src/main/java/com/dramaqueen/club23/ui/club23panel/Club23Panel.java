@@ -1,10 +1,8 @@
-package com.dramaqueen.club23.ui;
+package com.dramaqueen.club23.ui.club23panel;
 
 import com.dramaqueen.club23.model.Document;
 import com.dramaqueen.club23.model.DocumentListener;
-import com.dramaqueen.club23.ui.jface.IconAction;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.eclipse.jface.action.Action;
+import com.dramaqueen.club23.ui.FocusManager;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.browser.LocationEvent;
@@ -23,21 +21,16 @@ import java.util.Map;
 
 public class Club23Panel extends Composite {
 
-    private final Document   fDocument;
-    private final Browser    fBrowser;
-    private final Action     fBackAction;
-    private final Action     fForwardAction;
-    private BrowserFunction fEventCallback;
+    private final Document          fDocument;
+    private final Browser           fBrowser;
+    private final BrowserFunction   fEventCallback;
+    private final BrowserActions    fActions;
 
     public Club23Panel(Composite parent, Document document) {
         super(parent, SWT.NULL);
         fDocument = document;
         final DOMPropertyUpdater domUpdater = new DOMPropertyUpdater();
         fDocument.addListener(domUpdater);
-        addDisposeListener(disposeEvent -> {
-            fDocument.removeListener(domUpdater);
-            fEventCallback.dispose();
-        });
 
         fBrowser = new Browser(this, SWT.NULL);
         fBrowser.addLocationListener(new LocationListener() {
@@ -63,11 +56,11 @@ public class Club23Panel extends Composite {
 
             @Override
             public void changed(LocationEvent locationEvent) {
-                updateActions();
+                fActions.update();
             }
         });
 
-        fBrowser.addProgressListener( new ProgressListener() {
+        fBrowser.addProgressListener(new ProgressListener() {
             public void changed(ProgressEvent event) {
                 // @TODO: implement loading progress bar
             }
@@ -77,45 +70,31 @@ public class Club23Panel extends Composite {
             }
         });
 
-        fBackAction = new IconAction("Back", "go previous") {
-            @Override
-            public void run() {
-                fBrowser.back();
-            }
-        };
-
-        fForwardAction = new IconAction("Forward", "go next") {
-            @Override
-            public void run() {
-                fBrowser.forward();
-            }
-        };
-
         fEventCallback = new EventCallback(fBrowser, fDocument);
+        fActions = new BrowserActions(fBrowser);
+        fActions.update();
 
-        String url = document.getValue("url");
+        initContents();
+
+        addDisposeListener(disposeEvent -> {
+            fDocument.removeListener(domUpdater);
+            fEventCallback.dispose();
+        });
+
+        setLayout(new FillLayout());
+    }
+
+    public BrowserActions getActions() {
+        return fActions;
+    }
+
+    private void initContents() {
+        String url = fDocument.getValue("url");
         if (url.length() > 0) {
             fBrowser.setUrl(url);
         } else {
             loadBrowserContentsFromResources();
         }
-
-        updateActions();
-
-        setLayout(new FillLayout());
-    }
-
-    public Action getNavigateBackAction() {
-        return fBackAction;
-    }
-
-    public Action getNavigateForwardAction() {
-        return fForwardAction;
-    }
-
-    private void updateActions() {
-        fBackAction.setEnabled(fBrowser.isBackEnabled());
-        fForwardAction.setEnabled(fBrowser.isForwardEnabled());
     }
 
     private static Map<String, String> splitQuery(String query) {
@@ -153,31 +132,4 @@ public class Club23Panel extends Composite {
         }
     }
 
-    private static class PropertyEvent {
-        public String name;
-        public String value;
-    }
-
-    private static class EventCallback extends BrowserFunction {
-
-        private final Document fDocument;
-
-        EventCallback(Browser browser, Document document) {
-            super(browser, "eventCallbackJava");
-            fDocument = document;
-        }
-
-        @Override
-        public Object function(Object[] arguments) {
-            try {
-                System.out.println("Received event: " + arguments[0]);
-                PropertyEvent event = new ObjectMapper().readValue((String) arguments[0], PropertyEvent.class);
-                fDocument.setValue(event.name, event.value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
 }
