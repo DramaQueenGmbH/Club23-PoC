@@ -1,6 +1,7 @@
 package com.dramaqueen.club23.ui;
 
 import com.dramaqueen.club23.model.Document;
+import com.dramaqueen.club23.model.DocumentListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -30,6 +31,16 @@ public class DocumentPanel extends Composite implements Panel {
         for (String f : fields) {
             addTextField(f);
         }
+
+        fDocument.addListener(new DocumentListener() {
+            @Override
+            public void propertyChanged(String name, String value) {
+                Text field = fFields.get(name);
+                if (field != null && !value.equals(field.getText())) {
+                    field.setText(value);
+                }
+            }
+        });
 
         FocusManager.registerPanel("document", this);
 

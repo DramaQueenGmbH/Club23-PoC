@@ -3,8 +3,10 @@ package com.dramaqueen.club23.ui;
 import com.dramaqueen.club23.model.Document;
 import com.dramaqueen.club23.model.DocumentListener;
 import com.dramaqueen.club23.ui.jface.IconAction;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -19,17 +21,21 @@ import java.util.Map;
 
 public class Club23Panel extends Composite {
 
-    private final Document  fDocument;
-    private final Browser   fBrowser;
-    private final Action    fBackAction;
-    private final Action    fForwardAction;
+    private final Document   fDocument;
+    private final Browser    fBrowser;
+    private final Action     fBackAction;
+    private final Action     fForwardAction;
+    private BrowserFunction fEventCallback;
 
     public Club23Panel(Composite parent, Document document) {
         super(parent, SWT.NULL);
         fDocument = document;
         final DOMPropertyUpdater domUpdater = new DOMPropertyUpdater();
         fDocument.addListener(domUpdater);
-        addDisposeListener(disposeEvent -> fDocument.removeListener(domUpdater));
+        addDisposeListener(disposeEvent -> {
+            fDocument.removeListener(domUpdater);
+            fEventCallback.dispose();
+        });
 
         fBrowser = new Browser(this, SWT.NULL);
         fBrowser.addLocationListener(new LocationListener() {
@@ -72,6 +78,8 @@ public class Club23Panel extends Composite {
                 fBrowser.forward();
             }
         };
+
+        fEventCallback = new EventCallback(fBrowser, fDocument);
 
         loadBrowserContents();
         updateActions();
@@ -124,6 +132,34 @@ public class Club23Panel extends Composite {
         @Override
         public void propertyChanged(String name, String value) {
             fBrowser.execute("fieldChanged(`" + name + "`,`" + value + "`);");
+        }
+    }
+
+    private static class PropertyEvent {
+        public String name;
+        public String value;
+    }
+
+    private static class EventCallback extends BrowserFunction {
+
+        private final Document fDocument;
+
+        EventCallback(Browser browser, Document document) {
+            super(browser, "eventCallbackJava");
+            fDocument = document;
+        }
+
+        @Override
+        public Object function(Object[] arguments) {
+            try {
+                System.out.println("Received event: " + arguments[0]);
+                PropertyEvent event = new ObjectMapper().readValue((String) arguments[0], PropertyEvent.class);
+                fDocument.setValue(event.name, event.value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
     }
 }
