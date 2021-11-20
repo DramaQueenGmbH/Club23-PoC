@@ -29,7 +29,7 @@
     function initDq( dqDocument ) {
         document.getElementById( 'debug' ).style.border = '3px solid blue';
         window.sessionStorage.setItem( 'agent', 'dq' );
-        window.sessionStorage.setItem( 'document', dqDocument );
+        window.sessionStorage.setItem( 'document', JSON.stringify(dqDocument) );
         document.getElementById( 'debug' ).innerHTML = JSON.stringify(window.sessionStorage);
     }
 
