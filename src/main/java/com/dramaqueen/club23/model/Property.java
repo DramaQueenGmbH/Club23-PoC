@@ -10,4 +10,8 @@ class Property {
     String getValue() {
         return fValue;
     }
+
+    String asString() {
+        return fValue;
+    }
 }

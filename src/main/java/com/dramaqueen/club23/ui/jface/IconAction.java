@@ -13,6 +13,7 @@ public abstract class IconAction extends Action {
 
     public IconAction(String text, String iconName, int style) {
         super(text, style);
+        setId(iconName);
         String iconPath = "icons/actions/" + iconName+".png";
         URL iconUrl = getClass().getClassLoader().getResource(iconPath);
         if (iconUrl == null) {

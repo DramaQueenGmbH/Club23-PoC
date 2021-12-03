@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         Display display = Display.getDefault();
 
-        Document document = new Document();
+        Document document = initDocument();
         storeArgsInDocument(document, args);
 
         MainWindow window = new MainWindow(document);
@@ -20,11 +20,18 @@ public class App {
         }
     }
 
+    private static Document initDocument() {
+        Document document = new Document();
+        document.setValue("dqProperty1", "42");
+        document.setValue("dqProperty2", "Awesome");
+        return document;
+    }
+
     private static void storeArgsInDocument(Document document, String[] args) {
         for (String arg : args) {
-            if (arg.startsWith("url=")) {
-                String url = arg.substring("url=".length());
-                document.setValue("url", url);
+            String[] keyValue = arg.split("=");
+            if (keyValue.length == 2) {
+                document.setValue(keyValue[0], keyValue[1]);
             }
         }
     }

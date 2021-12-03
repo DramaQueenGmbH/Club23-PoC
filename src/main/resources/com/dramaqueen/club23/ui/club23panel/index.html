@@ -26,11 +26,12 @@
     <p id="debug">fooo</p>
 </body>
 <script type="text/javascript">
-    // function initDq() {
-    document.getElementById( 'debug' ).style.border = '3px solid blue';
-    window.sessionStorage.setItem( 'agent', 'dq' );
-    alert( JSON.stringify( window.location ) );
-    // }
+    function initDq( dqDocument ) {
+        document.getElementById( 'debug' ).style.border = '3px solid blue';
+        window.sessionStorage.setItem( 'agent', 'dq' );
+        window.sessionStorage.setItem( 'document', JSON.stringify(dqDocument) );
+        document.getElementById( 'debug' ).innerHTML = JSON.stringify(window.sessionStorage);
+    }
 
     function onPropChanged( prop, value ) {
         const elements = document.querySelectorAll( `.prop-${prop}` );
@@ -48,7 +49,7 @@
         }
     }
 
-    // document.getElementById( 'debug' ).innerHTML = JSON.stringify(window.sessionStorage);
+    document.getElementById( 'debug' ).innerHTML = JSON.stringify(window.sessionStorage);
 </script>
 
 </html>

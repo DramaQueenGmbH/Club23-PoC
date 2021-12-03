@@ -1,6 +1,7 @@
 package com.dramaqueen.club23.ui;
 
 import com.dramaqueen.club23.model.Document;
+import com.dramaqueen.club23.ui.club23panel.Club23Panel;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -39,8 +40,8 @@ public class MainWindow {
         Composite rightPanel = new DocumentPanel(shell, document);
         fillGrid(rightPanel).widthHint = 100;
 
-        toolBarManager.add(browserPanel.getNavigateBackAction());
-        toolBarManager.add(browserPanel.getNavigateForwardAction());
+        toolBarManager.add(browserPanel.getActions().get("go previous"));
+        toolBarManager.add(browserPanel.getActions().get("go next"));
         toolBarManager.update(false);
 
         GridLayout layout = new GridLayout(2, false);

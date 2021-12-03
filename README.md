@@ -31,7 +31,7 @@ The easiest way is to create another run configuration and pass the URL via prog
 
 ## Repo layout
 
-The webpage which is loaded into the `SWT.Browser` is located in [`index.html`](src/main/resources/com/dramaqueen/club23/ui/index.html).
+The webpage which is loaded into the `SWT.Browser` is located in [`index.html`](src/main/resources/com/dramaqueen/club23/ui/club23panel/index.html).
 It contains anchor tags with special links starting with `dq://`.
 A `LocationListener` is registered on the `SWT.Browser` reacting on navigation events from these links.
 A global [`FocusManager`](src/main/java/com/dramaqueen/club23/ui/FocusManager.java) is instructed to give keyboard focus to text fields with certain names contained in certain panels.

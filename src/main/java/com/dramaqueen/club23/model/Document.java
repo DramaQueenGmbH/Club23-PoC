@@ -1,9 +1,6 @@
 package com.dramaqueen.club23.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Document {
     private final Map<String, Property> fProperties;
@@ -48,6 +45,12 @@ public class Document {
         List<DocumentListener> listeners = new ArrayList<>(fListeners);
         for (DocumentListener l : listeners) {
             l.propertyChanged(name, p.getValue());
+        }
+    }
+
+    public void visitProperties(DocumentVisitor visitor) {
+        for (Map.Entry<String, Property> e : fProperties.entrySet()) {
+            visitor.visitProperty(e.getKey(), e.getValue().asString());
         }
     }
 }
